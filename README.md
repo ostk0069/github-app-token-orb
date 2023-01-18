@@ -1,4 +1,4 @@
-# Orb Template
+# GitHub App Token Orb
 
 
 [![CircleCI Build Status](https://circleci.com/gh/ostk0069/github-app-token-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/ostk0069/github-app-token-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/ostk0069/github-app-token.svg)](https://circleci.com/orbs/registry/orb/ostk0069/github-app-token) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/ostk0069/github-app-token-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
