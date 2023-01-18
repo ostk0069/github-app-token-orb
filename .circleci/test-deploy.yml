@@ -16,7 +16,7 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
-      - github-app-token/greet
+      - github-app-token/fetch-token
 workflows:
   test-deploy:
     jobs:
