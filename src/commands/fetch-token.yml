@@ -15,34 +15,10 @@ steps:
   - run:
       name: Fetch Installation Token
       command: |
-        header=$(echo -n '{"alg":"RS256","typ":"JWT"}' | base64 -w 0)
-
-        now=$(date "+%s")
-        iat=$((${now} - 60))
-        exp=$((${now} + (10 * 60)))
-        payload=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":<< parameters.app_id >>}" | base64 -w 0)
-
-        touch key.pem
-        echo << parameters.private_key >> >> key.pem
-
-        unsigned_token="${header}.${payload}"
-        signed_token=$(echo -n "${unsigned_token}" | openssl dgst -binary -sha256 -sign key.pem | base64 -w 0)
-
-        jwt="${unsigned_token}.${signed_token}"
-
-        installation_token=$(
-          curl -s -X POST \
-            -H "Authorization: Bearer ${jwt}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/app/installations/<< parameters.installation_id >>/access_tokens" \
-          | jq -r ".token"
-        )
-
-        github_app_token=$(
-          curl -s -X GET \
-            -H "Authorization: token ${installation_token}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/installation/repositories"
-        )
-
-        echo "export GITHUB_APP_TOKEN=${github_app_token}" >> $BASH_ENV
+        wget https://github.com/mackee/git-credential-github-apps/releases/download/v1.1.1/git-credential-github-apps_1.1.1_Linux_x86_64.tar.gz 
+        tar -zxvf git-credential-github-apps_1.1.1_Linux_x86_64.tar.gz
+        chmod 755 git-credential-github-apps
+        mv git-credential-github-apps /usr/bin/git-credential-github-apps
+        echo -e << parameters.private_key >> > /tmp/key.pem
+        export $(echo -e 'host=github.com\nprotocol=https' |  git-credential-github-apps -privatekey /tmp/key.pem -appid << parameters.app_id >> -login ostk0069 get | grep password)
+        echo "export GITHUB_APP_TOKEN=${password}" >> $BASH_ENV
