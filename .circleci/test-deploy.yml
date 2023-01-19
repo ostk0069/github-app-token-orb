@@ -13,6 +13,7 @@ jobs:
       - image: cimg/base:current
     steps:
       - checkout
+      # this app is just a tester. this does not have any permission. just generates token.
       - github-app-token/fetch-token:
           app_id: $GITHUB_APP_TOKEN_TESER_ID
           installation_id: 33287507

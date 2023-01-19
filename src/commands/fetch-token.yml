@@ -22,8 +22,11 @@ steps:
         exp=$((${now} + (10 * 60)))
         payload=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":<< parameters.app_id >>}" | base64 -w 0)
 
+        touch key.pem
+        echo << parameters.private_key >> > key.pem
+
         unsigned_token="${header}.${payload}"
-        signed_token=$(echo -n "${unsigned_token}" | openssl dgst -binary -sha256 -sign "<< parameters.private_key >>" | base64 -w 0)
+        signed_token=$(echo -n "${unsigned_token}" | openssl dgst -binary -sha256 -sign key.pem | base64 -w 0)
 
         jwt="${unsigned_token}.${signed_token}"
 
