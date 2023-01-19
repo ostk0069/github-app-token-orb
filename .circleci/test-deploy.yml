@@ -8,19 +8,18 @@ filters: &filters
     only: /.*/
 
 jobs:
-  # Create a job to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
   command-tests:
     docker:
       - image: cimg/base:current
     steps:
       - checkout
-      # Run your orb's commands to validate them.
-      - github-app-token/fetch-token
+      - github-app-token/fetch-token:
+          app_id: $GITHUB_APP_TOKEN_TESER_ID
+          installation_id: $GITHUB_APP_TOKEN_TESER_INSTALLATION_ID
+          private_pem: $GITHUB_APP_TOKEN_TESTER_PEM
 workflows:
   test-deploy:
     jobs:
-      # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
           filters: *filters
       - orb-tools/pack:
@@ -38,5 +37,3 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-
-# VS Code Extension Version: 1.4.0
