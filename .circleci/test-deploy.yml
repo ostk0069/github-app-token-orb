@@ -16,7 +16,7 @@ jobs:
       - github-app-token/fetch-token:
           app_id: $GITHUB_APP_TOKEN_TESER_ID
           installation_id: 33287507
-          private_pem: $GITHUB_APP_TOKEN_TESTER_PEM
+          private_key: $GITHUB_APP_TOKEN_TESTER_PEM
 workflows:
   test-deploy:
     jobs:
