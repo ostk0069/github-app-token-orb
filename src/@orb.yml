@@ -1,6 +1,6 @@
 version: 2.1
 
-description: Impersonate a GitHub App in a CircleCI Orb
+description: Impersonate a GitHub App in a CircleCI Orb. Make your GitHub Personal Token to be secured.
 
 display:
   source_url: "https://github.com/ostk0069/github-app-token-orb"
