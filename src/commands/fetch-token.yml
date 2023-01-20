@@ -1,5 +1,5 @@
 description: >
-  Fetch Installation Token as GITHUB_APP_INSTALLATION_TOKEN
+  Fetch Installation Token as GITHUB_APP_TOKEN
 parameters:
   app_id:
     type: string
@@ -7,9 +7,9 @@ parameters:
   installation_id:
     type: integer
     description: "The ID of the installation for which the token will be requested (defaults to the ID of the repository's installation)"
-  private_key:
+  base64_private_key:
     type: string
-    description: "Private key of the GitHub App (can be Base64 encoded)"
+    description: "Base64 encoded Private key of the GitHub App"
 steps:
   - jq/install
   - run:
@@ -22,11 +22,8 @@ steps:
         exp=$((${now} + (10 * 60)))
         payload=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":<< parameters.app_id >>}" | base64 -w 0)
 
-        touch key.pem
-        echo << parameters.private_key >> >> key.pem
-
         unsigned_token="${header}.${payload}"
-        signed_token=$(echo -n "${unsigned_token}" | openssl dgst -binary -sha256 -sign key.pem | base64 -w 0)
+        signed_token=$(echo -n "${unsigned_token}" | openssl dgst -binary -sha256 -sign <(echo << parameters.base64_private_key >> | base64 -d) | base64 -w 0)
 
         jwt="${unsigned_token}.${signed_token}"
 
@@ -37,12 +34,4 @@ steps:
             "https://api.github.com/app/installations/<< parameters.installation_id >>/access_tokens" \
           | jq -r ".token"
         )
-
-        github_app_token=$(
-          curl -s -X GET \
-            -H "Authorization: token ${installation_token}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/installation/repositories"
-        )
-
-        echo "export GITHUB_APP_TOKEN=${github_app_token}" >> $BASH_ENV
+        echo "export GITHUB_APP_TOKEN=${installation_token}" >> $BASH_ENV

@@ -10,4 +10,4 @@ usage:
         - github-app-token/fetch-token:
             app_id: << your app id >>
             installation_id: << your installation id >>
-            private_key: << your private key >>
+            base64_private_key: << your private key >>
