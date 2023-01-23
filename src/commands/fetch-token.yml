@@ -14,6 +14,10 @@ parameters:
     type: string
     default: GITHUB_APP_TOKEN
     description: "Enable to Customize Token ENV Name"
+  repository_name:
+    type: string
+    default: ""
+    description: "GitHub Repository Name"
 steps:
   - jq/install
   - run:
@@ -36,6 +40,7 @@ steps:
             -H "Authorization: Bearer ${jwt}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/app/installations/<< parameters.installation_id >>/access_tokens" \
+            $([[ -n "<< parameters.repository_name >>" ]] && echo "-d '{"repository":"<< parameters.repository_name >>"}'" || echo "") \
           | jq -r ".token"
         )
         echo "export << parameters.env_name >>=${installation_token}" >> $BASH_ENV
