@@ -45,9 +45,11 @@ workflows:
       - command-tests:
           filters: *filters
       - command-tests:
+          name: command-tests-node
           run_executor: node
           filters: *filters
       - command-tests:
+          name: command-tests-ruby
           run_executor: ruby
           filters: *filters
       - orb-tools/pack:
