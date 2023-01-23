@@ -10,6 +10,10 @@ parameters:
   base64_private_key:
     type: string
     description: "Base64 encoded Private key of the GitHub App"
+  env_name:
+    type: string
+    default: GITHUB_APP_TOKEN
+    description: "Enable to Customize Token ENV Name"
 steps:
   - jq/install
   - run:
@@ -34,4 +38,4 @@ steps:
             "https://api.github.com/app/installations/<< parameters.installation_id >>/access_tokens" \
           | jq -r ".token"
         )
-        echo "export GITHUB_APP_TOKEN=${installation_token}" >> $BASH_ENV
+        echo "export << parameters.env_name >>=${installation_token}" >> $BASH_ENV

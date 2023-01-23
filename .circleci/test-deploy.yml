@@ -7,22 +7,48 @@ filters: &filters
   tags:
     only: /.*/
 
-jobs:
-  command-tests:
+executors:
+  base:
     docker:
       - image: cimg/base:current
+  node:
+    docker:
+      - image: cimg/node:16.19.0
+  ruby:
+    docker:
+      - image: cimg/ruby:3.1.2-node
+
+commands:
+  fetch-github-app-token:
     steps:
-      - checkout
       # this app is just a tester. this does not have any permission. just generates token.
       - github-app-token/fetch-token:
           app_id: $GITHUB_APP_TOKEN_TESER_ID
           installation_id: 33287507
           base64_private_key: $GITHUB_APP_TOKEN_TESTER_PRIVATE_PEM_BASE64
+
+jobs:
+  command-tests:
+    parameters:
+      run_executor:
+        type: executor
+        default: base
+    executor: << parameters.run_executor >>
+    steps:
+      - checkout
+      - fetch-github-app-token
       - run: echo $GITHUB_APP_TOKEN
+
 workflows:
   test-deploy:
     jobs:
       - command-tests:
+          filters: *filters
+      - command-tests:
+          run_executor: node
+          filters: *filters
+      - command-tests:
+          run_executor: ruby
           filters: *filters
       - orb-tools/pack:
           filters: *filters
