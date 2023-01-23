@@ -18,7 +18,7 @@ This CircleCI Orb can be used to impersonate a GitHub App when secrets.GITHUB_TO
 version: '2.1'
 
 orbs:
-  github-app-token: ostk0069/github-app-token@0.1.0
+  github-app-token: ostk0069/github-app-token@0.0.1
 
 workflows:
   use-my-orb:
