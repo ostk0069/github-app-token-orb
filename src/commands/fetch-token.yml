@@ -16,7 +16,7 @@ parameters:
     description: "Enable to Customize Token ENV Name"
   repository_name:
     type: string
-    default: $CIRCLE_PR_REPONAME
+    default: $CIRCLE_PROJECT_REPONAME
     description: "GitHub Repository Name"
 steps:
   - jq/install

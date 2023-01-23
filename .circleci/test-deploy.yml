@@ -36,9 +36,9 @@ jobs:
     executor: << parameters.run_executor >>
     steps:
       - checkout
+      - run: echo $CIRCLE_PROJECT_REPONAME
       - fetch-github-app-token
       - run: echo $GITHUB_APP_TOKEN
-      - run: echo $CIRCLE_PR_REPONAME
 
 workflows:
   test-deploy:
