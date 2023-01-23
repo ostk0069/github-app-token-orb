@@ -37,7 +37,7 @@ app_id|ID of the GitHub App|Yes|-	|string
 base64_private_key|Base64 encoded Private key of the GitHub App|Yes|-	|string
 env_name|Enable to Customize Token ENV Name|No|GITHUB_APP_TOKEN	|string
 installation_id|The ID of the installation for which the token will be requested (defaults to the ID of the repository's installation)|Yes|-	|integer
-repository_name|GitHub Repository Name|No|CIRCLE_PR_REPONAME	|string
+repository_name|GitHub Repository Name|No|""	|string
 
 ## Resources
 

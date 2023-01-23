@@ -16,7 +16,7 @@ parameters:
     description: "Enable to Customize Token ENV Name"
   repository_name:
     type: string
-    default: $CIRCLE_PROJECT_REPONAME
+    default: ""
     description: "GitHub Repository Name"
 steps:
   - jq/install
@@ -40,7 +40,7 @@ steps:
             -H "Authorization: Bearer ${jwt}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/app/installations/<< parameters.installation_id >>/access_tokens" \
-            -d '{"repository":<< parameters.repository_name >>}'
+            $([[ -n "<< parameters.repository_name >>" ]] && echo "-d '{"repository":<< parameters.repository_name >>}'" || echo "")
           | jq -r ".token"
         )
         echo "export << parameters.env_name >>=${installation_token}" >> $BASH_ENV
