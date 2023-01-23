@@ -26,7 +26,6 @@ commands:
           app_id: $GITHUB_APP_TOKEN_TESER_ID
           installation_id: 33287507
           base64_private_key: $GITHUB_APP_TOKEN_TESTER_PRIVATE_PEM_BASE64
-          repository_name: "ostk0069/github-app-token-orb"
 
 jobs:
   command-tests:
