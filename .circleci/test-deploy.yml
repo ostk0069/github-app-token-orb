@@ -38,6 +38,7 @@ jobs:
       - checkout
       - fetch-github-app-token
       - run: echo $GITHUB_APP_TOKEN
+      - run: echo $CIRCLE_PR_REPONAME
 
 workflows:
   test-deploy:

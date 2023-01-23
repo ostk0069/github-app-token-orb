@@ -43,5 +43,4 @@ steps:
             -d '{"repository":<< parameters.repository_name >>}'
           | jq -r ".token"
         )
-        echo $CIRCLE_PR_REPONAME
         echo "export << parameters.env_name >>=${installation_token}" >> $BASH_ENV
