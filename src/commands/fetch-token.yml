@@ -40,7 +40,7 @@ steps:
             -H "Authorization: Bearer ${jwt}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/app/installations/<< parameters.installation_id >>/access_tokens" \
-            $([[ -n "<< parameters.repository_name >>" ]] && echo "-d '{"repository":<< parameters.repository_name >>}'" || echo "")
+            $([[ -n "<< parameters.repository_name >>" ]] && echo "-d '{"repository":"<< parameters.repository_name >>"}'" || echo "")
           | jq -r ".token"
         )
         echo "export << parameters.env_name >>=${installation_token}" >> $BASH_ENV
