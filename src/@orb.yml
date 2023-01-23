@@ -1,15 +1,10 @@
 version: 2.1
 
-description: >
-  Sample orb description
-# What will your orb allow users to accomplish?
-# Descriptions should be short, simple, and informative.
+description: Impersonate a GitHub App in a CircleCI Orb. Make your GitHub Personal Token to be secured.
 
-# This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://www.example.com/docs"
   source_url: "https://github.com/ostk0069/github-app-token-orb"
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
-# orbs:
-#  hello: circleci/hello-build@0.0.5
+orbs:
+  jq: circleci/jq@2.2.0

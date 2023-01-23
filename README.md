@@ -1,17 +1,14 @@
-# Orb Template
+# GitHub App Token Orb
 
 
 [![CircleCI Build Status](https://circleci.com/gh/ostk0069/github-app-token-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/ostk0069/github-app-token-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/ostk0069/github-app-token.svg)](https://circleci.com/orbs/registry/orb/ostk0069/github-app-token) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/ostk0069/github-app-token-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
+## Usage
 
-
-A project template for Orbs.
-
-This repository is designed to be automatically ingested and modified by the CircleCI CLI's `orb init` command.
-
-_**Edit this area to include a custom title and description.**_
-
----
+1. Create GitHub App. Follow the instruction [here](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps)
+2. Get, App Id, Installation Id, and Private Key
+3. encode your private key to base64. run `base64 xxxxxxx.xxxxxxx.private-key.pem | cat`
+4. Edit your .circleci/config.yml to get it ready.
 
 ## Resources
 

@@ -1,13 +1,13 @@
-description: >
-  Sample example description.
-# Provide a use-case based example for using this orb.
-# Everything in the `usage` section will be displayed in the orb registry.
-# Comments are not retained.
+description: Impersonate a GitHub App in a CircleCI Orb
+
 usage:
   version: 2.1
   orbs:
-    <orb-name>: <namespace>/<orb-name>@1.2.3
+    github-app-token: ostk0069/github-app-token@0.1.0
   workflows:
     use-my-orb:
       jobs:
-        - <orb-name>/<job-name>
+        - github-app-token/fetch-token:
+            app_id: << your app id >>
+            installation_id: << your installation id >>
+            base64_private_key: << your private key >>

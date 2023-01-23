@@ -7,21 +7,50 @@ filters: &filters
   tags:
     only: /.*/
 
-jobs:
-  # Create a job to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
-  command-tests:
+executors:
+  base:
     docker:
       - image: cimg/base:current
+  node:
+    docker:
+      - image: cimg/node:16.19.0
+  ruby:
+    docker:
+      - image: cimg/ruby:3.1.2-node
+
+commands:
+  fetch-github-app-token:
+    steps:
+      # this app is just a tester. this does not have any permission. just generates token.
+      - github-app-token/fetch-token:
+          app_id: $GITHUB_APP_TOKEN_TESER_ID
+          installation_id: 33287507
+          base64_private_key: $GITHUB_APP_TOKEN_TESTER_PRIVATE_PEM_BASE64
+
+jobs:
+  command-tests:
+    parameters:
+      run_executor:
+        type: executor
+        default: base
+    executor: << parameters.run_executor >>
     steps:
       - checkout
-      # Run your orb's commands to validate them.
-      - github-app-token/greet
+      - fetch-github-app-token
+      - run: echo $GITHUB_APP_TOKEN
+
 workflows:
   test-deploy:
     jobs:
-      # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
+          filters: *filters
+      - command-tests:
+          name: command-tests-node
+          run_executor: node
+          filters: *filters
+      - command-tests:
+          name: command-tests-ruby
+          run_executor: ruby
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -38,5 +67,3 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-
-# VS Code Extension Version: 1.4.0
